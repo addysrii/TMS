@@ -41,7 +41,7 @@ const Navigation = () => {
         </button>
       </div>
 
-      <div className="ml-16 flex items-center space-x-4 mt-4 sm:mt-0">
+      <div className="ml-52 flex items-center space-x-4 mt-4 sm:mt-0">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-circle avatar border-2 border-white">
             <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full ring ring-pink-300 ring-offset-base-100 ring-offset-2">
@@ -87,4 +87,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
