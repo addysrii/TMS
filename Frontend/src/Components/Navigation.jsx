@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,16 +21,16 @@ const Navigation = () => {
 
   return (
     <div className="navbar sticky top-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 p-4 shadow-lg z-50 flex flex-wrap justify-between items-center">
-      <div className="flex items-center w-full sm:w-auto justify-between">
+      <div className="flex items-center justify-between w-full sm:w-auto">
         <Link to="/" className="text-2xl sm:text-3xl font-extrabold text-white ml-4">
           <h1>BookForMe</h1>
         </Link>
-        <button className="sm:hidden text-white focus:outline-none" aria-label="Search">
-          <FontAwesomeIcon icon={faLocationDot} className="text-white w-6 h-6" />
+        <button className="sm:hidden text-white focus:outline-none" aria-label="Toggle search">
+          <FontAwesomeIcon icon={faSearch} className="text-white w-6 h-6" />
         </button>
       </div>
 
-      <div className="hidden sm:flex flex-grow items-center justify-center">
+      <div className="flex-grow flex items-center justify-center mt-4 sm:mt-0 w-full sm:w-auto">
         <input
           type="text"
           placeholder="Search for books, authors..."
@@ -41,7 +41,7 @@ const Navigation = () => {
         </button>
       </div>
 
-      <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+      <div className="ml-16 flex items-center space-x-4 mt-4 sm:mt-0">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-circle avatar border-2 border-white">
             <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full ring ring-pink-300 ring-offset-base-100 ring-offset-2">
@@ -87,3 +87,4 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
