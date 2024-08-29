@@ -6,7 +6,7 @@ const ManageUsers = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/admin/users', {
+      const { data } = await axios.get('https://tms-backend2.onrender.com/api/admin/users', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setUsers(data);
