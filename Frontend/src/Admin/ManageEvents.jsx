@@ -7,7 +7,7 @@ const ManageEvents = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/admin/events', {
+      const { data } = await axios.get('https://tms-backend2.onrender.com/api/admin/events', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setEvents(data);
