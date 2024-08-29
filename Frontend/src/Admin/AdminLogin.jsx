@@ -13,14 +13,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:5001/api/users/login', { email, password });
+      const { data } = await axios.post('http://localhost:5001/api/admin/login', { email, password });
       localStorage.setItem('token', data.token);
-      console.log(data)
-      if(data.isAdmin){
-        navigate("/admin/dashboard")}
-        else{
-      navigate('/events');
-         } // Navigate to dashboard or home page after login
+      navigate('/events'); // Navigate to dashboard or home page after login
     } catch (error) {
       setError('Invalid credentials. Please try again.');
       console.error('Error logging in:', error);
