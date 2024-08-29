@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:5001/api/users/login', { email, password });
+      const { data } = await axios.post('https://tms-backend2.onrender.com/api/users/login', { email, password });
       localStorage.setItem('token', data.token);
       navigate('/events'); // Navigate to dashboard or home page after login
     } catch (error) {
