@@ -6,7 +6,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/admin/dashboard', {
+      const { data } = await axios.get('https://tms-backend2.onrender.com/api/admin/dashboard', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setDashboardData(data);
