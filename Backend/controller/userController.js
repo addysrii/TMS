@@ -50,7 +50,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-
 const getUserProfile = async(req,res) => {
     const user = await User.findById(req.user._id)
     if(user){
@@ -65,4 +64,4 @@ const getUserProfile = async(req,res) => {
         throw Error("User Not Found")
     }
 }
-export {getUserProfile, registerUser,loginUser}
+export {getUserProfile, registerUser,loginUser,}
