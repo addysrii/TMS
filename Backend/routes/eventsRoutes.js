@@ -12,4 +12,6 @@ router.get('/:id', getEventById);
 router.post('/:id/book', protect, bookEvent);
 
 
+
+
 export default router;
