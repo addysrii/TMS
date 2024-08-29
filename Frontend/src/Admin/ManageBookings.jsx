@@ -6,7 +6,7 @@ const ManageBookings = () => {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/admin/bookings', {
+      const { data } = await axios.get('https://tms-backend2.onrender.com/api/admin/bookings', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setBookings(data);
