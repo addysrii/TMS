@@ -64,4 +64,6 @@ const getUserProfile = async(req,res) => {
         throw Error("User Not Found")
     }
 }
+
 export {getUserProfile, registerUser,loginUser,}
+
