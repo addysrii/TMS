@@ -7,6 +7,11 @@ import Login from './Components/Login';
 import Dashboard from "./Components/Dashboard"
 import Landing from './Components/Landing';
 import Register from './Components/Register';
+import ManageUsers from './Admin/ManageUsers';
+import ManageBookings from './Admin/ManageBookings'; 
+import ManageEvents from './Admin/ManageEvents';
+import AdminProfile from './Admin/AdminProfile';
+import AdminDashboard from './Admin/Dashboard';
 function App() {
   
 
@@ -20,6 +25,10 @@ function App() {
             <Route path="/login" element={<Login />} />
              <Route path="/register" element={<Register />} />
              <Route path="/dashboard" element={<Dashboard/>} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/manageevents" element={<ManageEvents />} />
+         <Route path="/admin/managebookings" element={<ManageBookings />} />
+         <Route path="/admin/manageusers" element={<ManageUsers />} />
       </Routes>
     </Router>
     </>
