@@ -1,89 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
-const Navigation = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
+const EventList = () => {
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // Check if the user is logged in by verifying the token in localStorage
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
+    const fetchEvents = async () => {
+      const response = await fetch('http://localhost:5001/api/events/');
+      const data = await response.json();
+      setEvents(data);
+    };
+    fetchEvents();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    navigate('/login');
-  };
+  const filteredEvents = events.filter(event => new Date(event.date) > new Date());
 
   return (
-    <div className="navbar sticky top-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 p-4 shadow-lg z-50 flex flex-wrap justify-between items-center">
-      <div className="flex items-center justify-between w-full sm:w-auto">
-        <Link to="/" className="text-2xl sm:text-3xl font-extrabold text-white ml-4">
-          <h1>BookForMe</h1>
-        </Link>
-        <button className="sm:hidden text-white focus:outline-none" aria-label="Toggle search">
-          <FontAwesomeIcon icon={faSearch} className="text-white w-6 h-6" />
-        </button>
-      </div>
-
-      <div className="flex-grow flex items-center justify-center mt-4 sm:mt-0 w-full sm:w-auto">
-        <input
-          type="text"
-          placeholder="Search for books, authors..."
-          className="input input-bordered w-full sm:w-2/3 md:w-1/2 lg:w-1/3 h-10 rounded-full px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-300"
-        />
-        <button className="ml-4 hidden sm:block">
-          <FontAwesomeIcon icon={faLocationDot} className="text-white w-6 sm:w-8 h-6 sm:h-8" />
-        </button>
-      </div>
-
-      <div className="ml-52 flex items-center space-x-4 mt-4 sm:mt-0">
-        <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-circle avatar border-2 border-white">
-            <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full ring ring-pink-300 ring-offset-base-100 ring-offset-2">
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-800">Upcoming Events</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredEvents.map(event => (
+          <div
+            key={event._id}
+            className="card w-full bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 ease-in-out"
+          >
+            <figure className="h-56 overflow-hidden">
               <img
-                alt="Profile"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={`http://localhost:5001${event.image}`}
+                alt={event.title}
+                className="w-full h-full object-cover"
               />
+            </figure>
+            <div className="card-body p-6">
+              <h2 className="card-title text-2xl font-semibold text-gray-900">{event.title}</h2>
+              <p className="text-gray-700 mt-2">{event.description}</p>
+              <p className="mt-4 text-gray-600">
+                <strong>Date:</strong> {new Date(event.date).toLocaleDateString('en-IN')}
+              </p>
+              <p className="text-gray-600">
+                <strong>Location:</strong> {event.location}
+              </p>
+              <div className="card-actions justify-end mt-4">
+                <Link
+                  to={`/event/${event._id}`}
+                  className="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-2 px-4 rounded-full hover:from-blue-600 hover:to-purple-700 transition duration-200 ease-in-out"
+                >
+                  View Details
+                </Link>
+              </div>
             </div>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content mt-3 p-2 shadow-lg bg-white rounded-box w-40 sm:w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge bg-pink-500 text-white">New</span>
-              </a>
-            </li>
-            <li><a>Settings</a></li>
-            {isLoggedIn && (
-              <li><a onClick={handleLogout}>Logout</a></li>
-            )}
-          </ul>
-        </div>
-        {!isLoggedIn ? (
-          <Link to="/login">
-            <button className="btn bg-white text-pink-500 font-semibold py-2 px-4 rounded-full shadow-md hover:bg-pink-500 hover:text-white transition ease-in-out duration-200">
-              Login
-            </button>
-          </Link>
-        ) : (
-          <button
-            onClick={handleLogout}
-            className="btn bg-white text-pink-500 font-semibold py-2 px-4 rounded-full shadow-md hover:bg-pink-500 hover:text-white transition ease-in-out duration-200"
-          >
-            Logout
-          </button>
-        )}
+        ))}
       </div>
     </div>
   );
 };
 
-export default Navigation;
+export default EventList;
