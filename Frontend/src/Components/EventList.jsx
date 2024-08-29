@@ -6,7 +6,7 @@ const EventList = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('http://localhost:5001/api/events/');
+      const response = await fetch('https://tms-backend2.onrender.com/api/events/');
       const data = await response.json();
       setEvents(data);
     };
