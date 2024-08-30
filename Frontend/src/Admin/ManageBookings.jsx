@@ -15,7 +15,7 @@ const ManageBookings = () => {
   }, []);
 
   const updateBookingStatus = async (id, status) => {
-    await axios.put(`http://localhost:5001/api/admin/bookings/${id}`, { status }, {
+    await axios.put(`https://tms-backend2.onrender.com/api/admin/bookings/${id}`, { status }, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
     setBookings(bookings.map((booking) => (booking._id === id ? { ...booking, status } : booking)));
