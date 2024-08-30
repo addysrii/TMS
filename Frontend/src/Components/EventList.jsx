@@ -13,7 +13,7 @@ const EventList = () => {
     fetchEvents();
   }, []);
 
-  const filteredEvents = events.filter(event => new Date(event.date) > new Date());
+  const filteredEvents = events.filter(event => new Date(event.endDate) > new Date());
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -35,7 +35,7 @@ const EventList = () => {
               <h2 className="card-title text-2xl font-semibold text-gray-900">{event.title}</h2>
               <p className="text-gray-700 mt-2">{event.description}</p>
               <p className="mt-4 text-gray-600">
-                <strong>Date:</strong> {new Date(event.date).toLocaleDateString('en-IN')}
+                <strong>Date:</strong> {new Date(event.EndDate).toLocaleDateString('en-IN')}
               </p>
               <p className="text-gray-600">
                 <strong>Location:</strong> {event.location}
