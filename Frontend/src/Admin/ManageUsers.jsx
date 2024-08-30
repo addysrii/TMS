@@ -16,7 +16,7 @@ const ManageUsers = () => {
 
   const deleteUser = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      await axios.delete(`http://localhost:5001/api/admin/users/${id}`, {
+      await axios.delete(`https://tms-backend2.onrender.com/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setUsers(users.filter((user) => user._id !== id));
