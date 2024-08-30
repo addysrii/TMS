@@ -6,6 +6,8 @@ const adminControllerFunction = {
     try {
       const totalEvents = await Event.countDocuments();
       const totalUsers = await User.countDocuments();
+
+      // Calculate total booked seats across all events
       const totalBookings = await Event.aggregate([
         {
           $group: {
@@ -15,10 +17,24 @@ const adminControllerFunction = {
         }
       ]);
 
+      // Current date to compare events
+      const currentDate = new Date();
+
+      // Calculate upcoming, ongoing, and completed events
+      const upcomingEvents = await Event.countDocuments({ date: { $gt: currentDate } });
+      const ongoingEvents = await Event.countDocuments({
+        startDate: { $lte: currentDate },
+        endDate: { $gte: currentDate }
+      });
+      const completedEvents = await Event.countDocuments({ endDate: { $lt: currentDate } });
+
       res.json({
         totalEvents,
         totalUsers,
-        totalBookedSeats: totalBookings[0] ? totalBookings[0].totalBookedSeats : 0
+        totalBookedSeats: totalBookings[0] ? totalBookings[0].totalBookedSeats : 0,
+        upcomingEvents,
+        ongoingEvents,
+        completedEvents,
       });
     } catch (error) {
       res.status(500).json({ message: 'Error fetching dashboard data', error });
@@ -96,7 +112,6 @@ const adminControllerFunction = {
     }
   },
 
-  // Booking is handled directly in the Event model, so no separate booking functions are needed.
   updateBookingStatus: async (req, res) => {
     try {
       const event = await Event.findById(req.params.eventId);
@@ -114,4 +129,4 @@ const adminControllerFunction = {
   }
 };
 
-export default adminControllerFunction ;
+export default adminControllerFunction;
