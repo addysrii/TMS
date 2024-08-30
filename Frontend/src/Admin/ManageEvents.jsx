@@ -17,7 +17,7 @@ const ManageEvents = () => {
 
   const deleteEvent = async (id) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
-      await axios.delete(`http://localhost:5001/api/admin/events/${id}`, {
+      await axios.delete(`https://tms-backend2.onrender.com/api/admin/events/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setEvents(events.filter((event) => event._id !== id));
