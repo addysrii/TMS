@@ -26,7 +26,7 @@ const EventList = () => {
           >
             <figure className="h-56 overflow-hidden">
               <img
-                src={`https://tms-backend2.onrender.com${event.image}`}
+                src={`http://localhost:5001${event.image}`}
                 alt={event.title}
                 className="w-full h-full object-cover"
               />
