@@ -12,7 +12,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('https://tms-backend2.onrender.com/api/users/registerUser', { name, email, password });
+      const { data } = await axios.post('https://tms-backend2.onrender.com/api/users/register', { name, email, password });
       localStorage.setItem('token', data.token);
       navigate('/login');
     } catch (error) {
