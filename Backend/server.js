@@ -29,11 +29,11 @@ app.use('/api/admin', adminRoutes);
 app.use('/uploads/EventImages', express.static(path.join(__dirname, '/uploads/EventImages')));
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../Frontend/dist')));
+app.use(express.static(path.join(__dirname, '../Frontend/build')));
 
 // Catch-all route to serve React app for all non-API routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../Frontend/build', 'index.html'));
 });
 
 // Start server
