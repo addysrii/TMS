@@ -5,7 +5,7 @@ import cors from 'cors';
 import eventRoutes from './routes/eventsRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import path from 'path';
-import adminRoutes from "./routes/adminRoutes.js"
+import adminRoutes from './routes/adminRoutes.js';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 
@@ -29,11 +29,11 @@ app.use('/api/admin', adminRoutes);
 app.use('/uploads/EventImages', express.static(path.join(__dirname, '/uploads/EventImages')));
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Catch-all route to serve React app for all non-API routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
 // Start server
