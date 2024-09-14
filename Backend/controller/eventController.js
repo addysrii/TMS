@@ -2,6 +2,14 @@
 
 import Event from "../modles/eventModel.js";
 
+
+import Event from "../modles/eventModel.js";
+
+const createEvent = async (req, res) => {
+  try {
+    const { title, description, startDate, endDate, location, price, seats } = req.body;
+    const imagePath = `/uploads/EventImages/${req.file.filename}`;
+    console.log('Image Path:', imagePath); // Log the image path
 const createEvent = async (req, res) => {
   try {
     const { title, description, startDate, endDate, location, price, seats } = req.body;
@@ -49,7 +57,11 @@ const getEvents = async (req, res) => {
     if (date) {
       const parsedDate = new Date(date);
       query.startDate = {
+      query.startDate = {
         $lte: parsedDate.setHours(23, 59, 59, 999),
+      };
+      query.endDate = {
+        $gte: parsedDate.setHours(0, 0, 0, 0),
       };
       query.endDate = {
         $gte: parsedDate.setHours(0, 0, 0, 0),
@@ -75,7 +87,36 @@ const getEventById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+const getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
 
+    if (event) {
+      res.json(event);
+    } else {
+      res.status(404).json({ message: 'Event not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const bookEvent = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);  // Get the event by ID
+
+    if (event) {
+      const seatsToBook = parseInt(req.body.seatsToBook, 10);  // Get the number of seats to book from the request body
+
+      // Check if the requested seats are available
+      if (event.bookedSeats + seatsToBook > event.seats) {
+        res.status(400);
+        throw new Error('Not enough seats available');
+      }
+
+      // Ensure the booking is within the event's date range
+      const now = new Date();
+      if (now < event.startDate || now > event.endDate) {
 const bookEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);  // Get the event by ID

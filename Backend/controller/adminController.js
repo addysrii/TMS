@@ -1,7 +1,5 @@
 import Event from '../modles/eventModel.js';
 import User from '../modles/userModel.js';
-import multer from 'multer';
-
 
 const adminControllerFunction = {
   getDashboardData: async (req, res) => {
@@ -23,7 +21,7 @@ const adminControllerFunction = {
       const currentDate = new Date();
 
       // Calculate upcoming, ongoing, and completed events
-      const upcomingEvents = await Event.countDocuments({ startDate: { $gt: currentDate } });
+      const upcomingEvents = await Event.countDocuments({ date: { $gt: currentDate } });
       const ongoingEvents = await Event.countDocuments({
         startDate: { $lte: currentDate },
         endDate: { $gte: currentDate }

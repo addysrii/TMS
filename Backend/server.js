@@ -4,15 +4,12 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import eventRoutes from './routes/eventsRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
-import bodyParser from 'body-parser';
+import path from 'path';
+import adminRoutes from "./routes/adminRoutes.js"
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 const app = express();
-app.use(bodyParser.json());
-app.use(cors({
-  origin: 'https://tms-frontend-5qxx.onrender.com/', // Replace with your actual frontend URL
-}));
 
 app.use(express.json());
 

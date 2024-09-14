@@ -9,17 +9,10 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get(`http://${import.meta.env.BASE_URL}/api/admin/dashboard`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        });
-        setDashboardData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      const { data } = await axios.get('http://localhost:5001/api/admin/dashboard', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      setDashboardData(data);
     };
     fetchData();
   }, []);
@@ -60,27 +53,6 @@ const AdminDashboard = () => {
           <div className="stat-value">₹{dashboardData.totalRevenue}</div>
         </div>
       </div>
-
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold">Event Status Distribution</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={eventStatusData}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="value" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-
-      <button
-        onClick={() => window.location.reload()}
-        className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        Refresh Data
-      </button>
-      <a href="/admin/createevent">Create Event</a>
     </div>
   );
 };

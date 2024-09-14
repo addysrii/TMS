@@ -6,7 +6,7 @@ const ManageUsers = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { data } = await axios.get('http://${import.meta.env.BASE_URL}/api/admin/users', {
+      const { data } = await axios.get('https://tms-backend2.onrender.com/api/admin/users', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setUsers(data);
@@ -16,7 +16,7 @@ const ManageUsers = () => {
 
   const deleteUser = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      await axios.delete(`http://${import.meta.env.BASE_URL}/api/admin/users/${id}`, {
+      await axios.delete(`https://tms-backend2.onrender.com/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setUsers(users.filter((user) => user._id !== id));

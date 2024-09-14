@@ -6,7 +6,7 @@ const EventList = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch(`${import.meta.env.BASE_URL}/api/events/`);
+      const response = await fetch('http://localhost:5001/api/events/');
       const data = await response.json();
       setEvents(data);
     };
@@ -26,7 +26,7 @@ const EventList = () => {
           >
             <figure className="h-56 overflow-hidden">
               <img
-                src={` http://${import.meta.env.BASE_URL}${event.image}`}
+                src={`http://localhost:5001${event.image}`}
                 alt={event.title}
                 className="w-full h-full object-cover"
               />
@@ -35,7 +35,7 @@ const EventList = () => {
               <h2 className="card-title text-2xl font-semibold text-gray-900">{event.title}</h2>
               <p className="text-gray-700 mt-2">{event.description}</p>
               <p className="mt-4 text-gray-600">
-                <strong>Date:</strong> {new Date(event.startDate).toLocaleDateString('en-IN')}
+                <strong>Date:</strong> {new Date(event.date).toLocaleDateString('en-IN')}
               </p>
               <p className="text-gray-600">
                 <strong>Location:</strong> {event.location}

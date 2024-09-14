@@ -8,7 +8,7 @@ const AdminProfile = () => {
 
   useEffect(() => {
     const fetchAdminData = async () => {
-      const { data } = await axios.get('http://${import.meta.env.BASE_URL}/api/users/profile', {
+      const { data } = await axios.get('http://localhost:5001/api/users/profile', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setAdmin(data);
