@@ -55,10 +55,12 @@ const Navigation = () => {
             className="menu dropdown-content mt-3 p-2 shadow-lg bg-white rounded-box w-40 sm:w-52 right-0 z-50"
           >
             <li>
+              <Link to= "/dashboard" className=''>
               <a className="justify-between">
                 Profile
                 <span className="badge bg-pink-500 text-white">New</span>
               </a>
+              </Link>
             </li>
             <li><a>Settings</a></li>
             {isLoggedIn && (

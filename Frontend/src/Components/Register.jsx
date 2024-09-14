@@ -6,17 +6,19 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('https://tms-backend2.onrender.com/api/users/register', { name, email, password });
+      const { data } = await axios.post(`http://${import.meta.env.BASE_URL}/api/users/register`, { name, email, password });
       localStorage.setItem('token', data.token);
       navigate('/login');
     } catch (error) {
-      console.error('Error registering:', error);
+      setError('Invalid credentials. Please try again.');
+      console.error('Error logging in:', error);
     }
   };
 
@@ -67,7 +69,15 @@ const Register = () => {
           >
             Register
           </button>
+
         </form>
+        {error && (
+            <div className="alert alert-error bg-red-100 border border-red-400 text-red-700 rounded-lg p-4 shadow-sm mt-4">
+              <div>
+                <span>{error}</span>
+              </div>
+            </div>
+          )}
         <p className="text-center mt-4 text-gray-600">
           Already have an account?{' '}
           <a href="/login" className="text-purple-600 hover:text-purple-800 font-semibold">Login here</a>

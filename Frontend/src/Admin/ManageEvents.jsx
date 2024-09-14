@@ -7,7 +7,7 @@ const ManageEvents = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/admin/events', {
+      const { data } = await axios.get('http://${import.meta.env.BASE_URL}/api/admin/events', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setEvents(data);
@@ -17,7 +17,7 @@ const ManageEvents = () => {
 
   const deleteEvent = async (id) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
-      await axios.delete(`http://localhost:5001/api/admin/events/${id}`, {
+      await axios.delete(`http://${import.meta.env.BASE_URL}/api/admin/events/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setEvents(events.filter((event) => event._id !== id));

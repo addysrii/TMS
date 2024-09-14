@@ -1,11 +1,15 @@
 import Event from '../modles/eventModel.js';
 import User from '../modles/userModel.js';
+import multer from 'multer';
+
 
 const adminControllerFunction = {
   getDashboardData: async (req, res) => {
     try {
       const totalEvents = await Event.countDocuments();
       const totalUsers = await User.countDocuments();
+
+      // Calculate total booked seats across all events
       const totalBookings = await Event.aggregate([
         {
           $group: {
@@ -15,10 +19,24 @@ const adminControllerFunction = {
         }
       ]);
 
+      // Current date to compare events
+      const currentDate = new Date();
+
+      // Calculate upcoming, ongoing, and completed events
+      const upcomingEvents = await Event.countDocuments({ startDate: { $gt: currentDate } });
+      const ongoingEvents = await Event.countDocuments({
+        startDate: { $lte: currentDate },
+        endDate: { $gte: currentDate }
+      });
+      const completedEvents = await Event.countDocuments({ endDate: { $lt: currentDate } });
+
       res.json({
         totalEvents,
         totalUsers,
-        totalBookedSeats: totalBookings[0] ? totalBookings[0].totalBookedSeats : 0
+        totalBookedSeats: totalBookings[0] ? totalBookings[0].totalBookedSeats : 0,
+        upcomingEvents,
+        ongoingEvents,
+        completedEvents,
       });
     } catch (error) {
       res.status(500).json({ message: 'Error fetching dashboard data', error });
@@ -34,15 +52,35 @@ const adminControllerFunction = {
     }
   },
 
-  createEvent: async (req, res) => {
-    try {
-      const newEvent = new Event(req.body);
-      const savedEvent = await newEvent.save();
-      res.status(201).json(savedEvent);
-    } catch (error) {
-      res.status(500).json({ message: 'Error creating event', error });
-    }
-  },
+  
+ createEvent : async (req, res) => {
+  try {
+    const { title, description, startDate, endDate, location, price, seats } = req.body;
+    const image = req.file ? req.file.path : '';
+console.log('Request Body:', req.body);
+console.log('Uploaded File:', req.file);
+
+    // Create the event
+    const event = new Event({
+      title,
+      description,
+      startDate,
+      endDate,
+      location,
+      price,
+      seats,
+      image,
+      createdBy: req.user._id,
+    });
+
+    await event.save();
+    res.status(201).json({ message: 'Event created successfully', event });
+  } catch (error) {
+    console.error('Error creating event:', error);
+    res.status(400).json({ message: 'Error creating event', error });
+  }
+},
+
 
   updateEvent: async (req, res) => {
     try {
@@ -96,7 +134,6 @@ const adminControllerFunction = {
     }
   },
 
-  // Booking is handled directly in the Event model, so no separate booking functions are needed.
   updateBookingStatus: async (req, res) => {
     try {
       const event = await Event.findById(req.params.eventId);
@@ -114,4 +151,4 @@ const adminControllerFunction = {
   }
 };
 
-export default adminControllerFunction ;
+export default adminControllerFunction;

@@ -6,7 +6,7 @@ const ManageBookings = () => {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/admin/bookings', {
+      const { data } = await axios.get(`http://${import.meta.env.BASE_URL}/api/admin/bookings`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setBookings(data);
@@ -15,7 +15,7 @@ const ManageBookings = () => {
   }, []);
 
   const updateBookingStatus = async (id, status) => {
-    await axios.put(`http://localhost:5001/api/admin/bookings/${id}`, { status }, {
+    await axios.put(`http://${import.meta.env.BASE_URL}/api/admin/bookings/${id}`, { status }, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
     setBookings(bookings.map((booking) => (booking._id === id ? { ...booking, status } : booking)));

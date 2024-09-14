@@ -10,8 +10,9 @@ import Register from './Components/Register';
 import ManageUsers from './Admin/ManageUsers';
 import ManageBookings from './Admin/ManageBookings'; 
 import ManageEvents from './Admin/ManageEvents';
-import AdminProfile from './Admin/AdminProfile';
+
 import AdminDashboard from './Admin/Dashboard';
+import AdminCreateEvent from './Admin/AdminCreateEvent';
 function App() {
   
 
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/admin/manageevents" element={<ManageEvents />} />
          <Route path="/admin/managebookings" element={<ManageBookings />} />
          <Route path="/admin/manageusers" element={<ManageUsers />} />
+         <Route path = "/admin/createevent" element ={<AdminCreateEvent/>} />
       </Routes>
     </Router>
     </>

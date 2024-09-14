@@ -28,11 +28,11 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find the user by email
+
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-      // Send the response with user data and token
+     
       res.json({
         _id: user._id,
         name: user.name,
@@ -41,11 +41,11 @@ const loginUser = async (req, res) => {
         token: generateToken(user._id),
       });
     } else {
-      // Incorrect credentials
+
       res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (error) {
-    // Handle any errors that occur
+
     res.status(500).json({ message: "Server error" });
   }
 };

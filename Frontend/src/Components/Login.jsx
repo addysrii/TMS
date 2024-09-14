@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:5001/api/users/login', { email, password });
+      const { data } = await axios.post(`${import.meta.env.BASE_URL}/api/users/login`, { email, password });
       localStorage.setItem('token', data.token);
       console.log(data)
       if(data.isAdmin){
