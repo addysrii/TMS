@@ -16,14 +16,17 @@ const ManageEvents = () => {
   }, []);
 
   const deleteEvent = async (id) => {
-    if (window.confirm('Are you sure you want to delete this event?')) {
-      await axios.delete(`https://tms-backend2.onrender.com/api/admin/events/${id}`, {
-      await axios.delete(`http://${import.meta.env.BASE_URL}/api/admin/events/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
-      setEvents(events.filter((event) => event._id !== id));
-    }
-  };
+   if (window.confirm('Are you sure you want to delete this event?')) {
+  try {
+    await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/admin/events/${id}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
+    // Handle success, e.g., removing the event from the list in the UI
+  } catch (error) {
+    console.error('Error deleting the event', error);
+  }
+}
+
 
   return (
     <div className="p-4">
