@@ -14,7 +14,11 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://tms-frontend-5qxx.onrender.com', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add any other methods you use
+}));
+
 app.use(express.json());
 
 // MongoDB connection
@@ -27,14 +31,6 @@ app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/uploads/EventImages', express.static(path.join(__dirname, '/uploads/EventImages')));
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../Frontend/dist')));
-
-// Catch-all route to serve React app for all non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/dist', 'index.html'));
-});
 
 // Start server
 const PORT = process.env.PORT || 5000;
