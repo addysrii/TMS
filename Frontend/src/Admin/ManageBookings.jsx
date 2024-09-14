@@ -21,7 +21,7 @@ const ManageBookings = () => {
 
   const updateBookingStatus = async (id, status) => {
     try {
-      await axios.put(`${import.meta.env.VITE_BASE_URL}/api/admin/bookings/${id}`, { status }, {
+      await axios.put(`${import.meta.env.BASE_URL}/api/admin/bookings/${id}`, { status }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setBookings(bookings.map((booking) => (booking._id === id ? { ...booking, status } : booking)));
