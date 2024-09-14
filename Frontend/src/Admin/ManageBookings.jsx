@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -6,20 +7,27 @@ const ManageBookings = () => {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const { data } = await axios.get('https://tms-backend2.onrender.com/api/admin/bookings', {
-      const { data } = await axios.get(`http://${import.meta.env.BASE_URL}/api/admin/bookings`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
-      setBookings(data);
+      try {
+        const { data } = await axios.get(`${import.meta.env.BASE_URL}/api/admin/bookings`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+        setBookings(data);
+      } catch (error) {
+        console.error('Error fetching bookings', error);
+      }
     };
     fetchBookings();
   }, []);
 
   const updateBookingStatus = async (id, status) => {
-    await axios.put(`http://${import.meta.env.BASE_URL}/api/admin/bookings/${id}`, { status }, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    });
-    setBookings(bookings.map((booking) => (booking._id === id ? { ...booking, status } : booking)));
+    try {
+      await axios.put(`${import.meta.env.VITE_BASE_URL}/api/admin/bookings/${id}`, { status }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      setBookings(bookings.map((booking) => (booking._id === id ? { ...booking, status } : booking)));
+    } catch (error) {
+      console.error('Error updating booking status', error);
+    }
   };
 
   return (
